@@ -15,7 +15,7 @@ from util.pad import audiovisual_batch_collate
 from util.seq_alignment import beam_search
 
 #Get a full list of all videos with speakers, sentences, and offsets
-per_ckpt = "/home/analysis/Dev/lukas/speech_cpc/lrs2_audiovisual_predictor_lightning_logs/lightning_logs/version_2/checkpoints/epoch=71-step=1279367.ckpt"
+per_ckpt = "/home/analysis/Documents/studentHDD/chris/lightning_logs/version_0/checkpoints/epoch=71-step=1279367.ckpt"
 offsetMap={
 	0:"I840",
 	1:"I720",
