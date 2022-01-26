@@ -54,7 +54,7 @@ for x in tqdm(range(len(paths))):
 	visualInput=np.load("/home/analysis/Documents/studentHDD/chris/monoSubclips/"+paths[x]+".npy")
 	audioInput=wave.open("/home/analysis/Documents/studentHDD/chris/monoSubclips/"+paths[x]+".wav","r")
 
-	visualInput=visualInput.cuda()
-	audioInput=audioInput.cuda()
+	# visualInput=visualInput.cuda()
+	# audioInput=audioInput.cuda()
 
 	output=model.get_predictions((audioInput,visualInput))

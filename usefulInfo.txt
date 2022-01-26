@@ -1,0 +1,2 @@
+Lukas's code can be found on the analysis machine at ~/Dev/lukas/speech_cpc/
+Useful scripts can be found in per/
