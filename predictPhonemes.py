@@ -105,7 +105,7 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 
 		per = levenshtein(y, predSeq)/y.shape[-1]
 
-		resultArr.append(offsetMap[i%16],per)
+		resultArr.append([offsetMap[i%16],per])
 
 		#writer.writerow([index, per])
 
