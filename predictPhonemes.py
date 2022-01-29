@@ -112,4 +112,7 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 		#avgPER += per
 		#nItems += 1
 
-print(resultArr)
+#print(resultArr)
+with open("PER.csv","w") as file:
+	writer=csv.writer(file,delimeter=',')
+	writer.writerows(resultArr)
