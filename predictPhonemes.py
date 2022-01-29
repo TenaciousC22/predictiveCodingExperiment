@@ -14,6 +14,25 @@ from models.audiovisual_model import FBAudioVisualCPCPhonemeClassifierLightning
 from util.pad import audiovisual_batch_collate
 from util.seq_alignment import beam_search
 
+offsetMap={
+	0:"I840",
+	1:"I720",
+	2:"I600",
+	3:"I480",
+	4:"I360",
+	5:"I240",
+	6:"I060",
+	7:"base",
+	8:"B060",
+	9:"B240",
+	10:"B360",
+	11:"B480",
+	12:"B600",
+	13:"B720",
+	14:"B840",
+	15:"jumble"
+}
+
 def levenshtein(a, b):
     "Calculates the Levenshtein distance between a and b."
     n, m = len(a), len(b)
@@ -35,25 +54,6 @@ def levenshtein(a, b):
     return current[n]
 
 def createDatasetPaths():
-	offsetMap={
-		0:"I840",
-		1:"I720",
-		2:"I600",
-		3:"I480",
-		4:"I360",
-		5:"I240",
-		6:"I060",
-		7:"base",
-		8:"B060",
-		9:"B240",
-		10:"B360",
-		11:"B480",
-		12:"B600",
-		13:"B720",
-		14:"B840",
-		15:"jumble"
-	}
-
 	paths=[]
 
 	for x in range(6):
@@ -91,6 +91,7 @@ testGenerator = data.DataLoader(testSet, collate_fn=audiovisual_batch_collate, *
 
 for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 	i = index
+	print(i)
 	with torch.no_grad():
 		x_audio, x_visual, y = data
 		x_audio = x_audio.cuda()
@@ -102,9 +103,9 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 
 		y = y.numpy()
 
-		per = levenshtein(y, predSeq)/y.shape[-1]
+		#per = levenshtein(y, predSeq)/y.shape[-1]
 
 		#writer.writerow([index, per])
 
-		avgPER += per
-		nItems += 1
+		#avgPER += per
+		#nItems += 1
