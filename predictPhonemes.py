@@ -89,9 +89,9 @@ testIDs=createDatasetPaths()
 testSet=LRS2AudioVisualPhonemeDataset(testIDs, datasetPath, test_params['batch_size'])
 testGenerator = data.DataLoader(testSet, collate_fn=audiovisual_batch_collate, **test_params)
 
+resultArr=[]
 for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 	i = index
-	print(type(i))
 	with torch.no_grad():
 		x_audio, x_visual, y = data
 		x_audio = x_audio.cuda()
@@ -103,9 +103,13 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 
 		y = y.numpy()
 
-		#per = levenshtein(y, predSeq)/y.shape[-1]
+		per = levenshtein(y, predSeq)/y.shape[-1]
+
+		resultArr.append(offsetMap[i%16],per)
 
 		#writer.writerow([index, per])
 
 		#avgPER += per
 		#nItems += 1
+
+print(resultArr)
