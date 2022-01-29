@@ -14,6 +14,26 @@ from models.audiovisual_model import FBAudioVisualCPCPhonemeClassifierLightning
 from util.pad import audiovisual_batch_collate
 from util.seq_alignment import beam_search
 
+def levenshtein(a, b):
+    "Calculates the Levenshtein distance between a and b."
+    n, m = len(a), len(b)
+    if n > m:
+        # Make sure n <= m, to use O(min(n,m)) space
+        a, b = b, a
+        n, m = m, n
+
+    current = list(range(n+1))
+    for i in range(1, m+1):
+        previous, current = current, [i]+[0]*n
+        for j in range(1, n+1):
+            add, delete = previous[j]+1, current[j-1]+1
+            change = previous[j-1]
+            if a[j-1] != b[i-1]:
+                change = change + 1
+            current[j] = min(add, delete, change)
+
+    return current[n]
+
 def createDatasetPaths():
 	offsetMap={
 		0:"I840",
@@ -67,20 +87,24 @@ model.eval()
 testIDs=createDatasetPaths()
 
 testSet=LRS2AudioVisualPhonemeDataset(testIDs, datasetPath, test_params['batch_size'])
+testGenerator = data.DataLoader(testSet, collate_fn=audiovisual_batch_collate, **test_params)
 
-for line in testSet:
-	print(line)
-	print("")
+for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
+	i = index
+	with torch.no_grad():
+		x_audio, x_visual, y = data
+		x_audio = x_audio.cuda()
+		x_visual = x_visual.cuda()
+		y = y.squeeze()
+		y_hat = model.get_predictions((x_audio, x_visual)).squeeze()
 
-# for path in paths:
-# 	print(path)
+		predSeq = np.array(beam_search(y_hat.cpu().numpy(), 10, model.phoneme_criterion.BLANK_LABEL)[0][1], dtype=np.int32)
 
-# for x in tqdm(range(len(paths))):
-# 	# visualInput=np.load("/home/analysis/Documents/studentHDD/chris/monoSubclips/"+paths[x]+".npy")
-# 	# audioInput=wave.open("/home/analysis/Documents/studentHDD/chris/monoSubclips/"+paths[x]+".wav","r")
+		y = y.numpy()
 
-# 	# visualInput=visualInput.cuda()
-# 	# audioInput=audioInput.cuda()
+		per = levenshtein(y, predSeq)/y.shape[-1]
 
-# 	output=model.get_predictions((audioInput,visualInput))
+		#writer.writerow([index, per])
 
+		avgPER += per
+		nItems += 1
