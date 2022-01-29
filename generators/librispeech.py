@@ -194,6 +194,7 @@ class LRS2AudioVisualPhonemeDataset(data.Dataset):
         'Denotes the total number of samples'
         return len(self.list_IDs)
 
+    #Modify this to take in my dataset
     def __getitem__(self, index):
         'Generates one sample of data'
         # Select sample
