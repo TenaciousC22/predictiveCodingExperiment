@@ -66,7 +66,11 @@ model.eval()
 
 testIDs=createDatasetPaths()
 
-test_set=LRS2AudioVisualPhonemeDataset(testIDs, datasetPath, test_params['batch_size'])
+testSet=LRS2AudioVisualPhonemeDataset(testIDs, datasetPath, test_params['batch_size'])
+
+for line in testSet:
+	print(line)
+	print("")
 
 # for path in paths:
 # 	print(path)
