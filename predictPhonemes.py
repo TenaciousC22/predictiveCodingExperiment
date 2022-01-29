@@ -91,7 +91,7 @@ testGenerator = data.DataLoader(testSet, collate_fn=audiovisual_batch_collate, *
 
 for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 	i = index
-	print(i)
+	print(type(i))
 	with torch.no_grad():
 		x_audio, x_visual, y = data
 		x_audio = x_audio.cuda()
