@@ -106,9 +106,14 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 		# per = levenshtein(y, predSeq)/y.shape[-1]
 
 		resultArr.append([offsetMap[i%16]])
-		resultArr[-1].append(predSeq)
+
+		for val in predSeq:
+			resultArr[-1].append(val)
+		
 		resultArr[-1].append("|")
-		resultArr[-1].append(y)
+
+		for val in y:
+			resultArr[-1].append(y)
 
 		print(resultArr[-1])
 
