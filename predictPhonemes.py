@@ -115,7 +115,7 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 		for val in y:
 			resultArr[-1].append(val)
 
-		print(resultArr[-1])
+		# print(resultArr[-1])
 
 		#writer.writerow([index, per])
 
