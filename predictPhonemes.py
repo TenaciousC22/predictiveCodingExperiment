@@ -113,7 +113,7 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 		resultArr[-1].append("|")
 
 		for val in y:
-			resultArr[-1].append(y)
+			resultArr[-1].append(val)
 
 		print(resultArr[-1])
 
