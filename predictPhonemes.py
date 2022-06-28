@@ -103,11 +103,14 @@ for index, data in tqdm(enumerate(testGenerator), total=len(testGenerator)):
 
 		y = y.numpy()
 
-		print(y)
+		# per = levenshtein(y, predSeq)/y.shape[-1]
 
-		per = levenshtein(y, predSeq)/y.shape[-1]
+		resultArr.append([offsetMap[i%16]])
+		resultArr[-1].append(predSeq)
+		resultArr[-1].append("|")
+		resultArr[-1].append(y)
 
-		resultArr.append([offsetMap[i%16],per])
+		print(resultArr[-1])
 
 		#writer.writerow([index, per])
 
