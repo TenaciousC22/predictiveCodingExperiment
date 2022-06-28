@@ -65,7 +65,7 @@ def createDatasetPaths():
 
 #Get a full list of all videos with speakers, sentences, and offsets
 per_ckpt = "/home/analysis/Documents/studentHDD/chris/lightning_logs/version_0/checkpoints/epoch=10-step=63018.ckpt"
-dest_csv="~/Documents/studentHDD/chris/predictiveCodingExperiment/predictiveCodingPhonemeResults.csv"
+dest_csv="/home/analysis/Documents/studentHDD/chris/predictiveCodingExperiment/predictiveCodingPhonemeResults.csv"
 datasetPath="/home/analysis/Documents/studentHDD/chris/monoSubclips/"
 
 model = FBAudioVisualCPCPhonemeClassifierLightning(src_checkpoint_path=per_ckpt, batch_size=1, cached=False, LSTM=True).cuda()
